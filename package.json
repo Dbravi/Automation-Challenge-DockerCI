@@ -1,0 +1,14 @@
+{
+  "name": "automation-challenge-dockerci",
+  "version": "1.0.0",
+  "description": "Automation Challenge using Docker and Github Actions",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.48.2",
+    "@types/node": "^22.9.0"
+  }
+}
