@@ -1,22 +1,29 @@
 name: Playwright Tests
+
 on:
   push:
-    branches: [ main, master ]
+    branches: [Allure-Testing]
   pull_request:
-    branches: [ main, master ]
+    branches: [Allure-Testing]
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+
     steps:
+    # Step 1: Checkout the repository
     - uses: actions/checkout@v4
 
+    # Step 2: Set up Docker
     - name: Set up Docker
       uses: docker/setup-buildx-action@v2
 
+    # Step 3: Pull Docker image
     - name: Pull Docker image
       run: docker pull dovrak/playwright-1
 
+    # Step 4: Run Playwright tests in Docker container
     - name: Run Playwright tests in Docker container
       run: |
         docker run --rm \
@@ -25,9 +32,27 @@ jobs:
           dovrak/playwright-1 \
           /bin/bash -c "npm ci && npx playwright install --with-deps && npx playwright test"
 
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+    # Step 5: Install Allure command-line tool
+    - name: Install Allure command-line tool
+      run: |
+        npm install -g allure-commandline --save-dev
+        wget -qO allure.zip https://github.com/allure-framework/allure2/releases/download/2.32.0/allure-2.32.0.zip
+        unzip allure.zip -d /opt/allure
+        sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+        rm allure.zip
+
+    # Step 6: Install Playwright Browsers
+    - name: Install Playwright Browsers
+      run: npx playwright install --with-deps
+
+    # Step 7: Generate Allure report
+    - name: Generate Allure report
+      run: allure generate --single-file ./allure-results --clean
+
+    # Step 8: Upload Allure Report as artifact
+    - name: Upload Allure Report
+      uses: actions/upload-artifact@v4
       with:
-        name: playwright-report
-        path: playwright-report/
+        name: allure-report
+        path: allure-report/
         retention-days: 30
