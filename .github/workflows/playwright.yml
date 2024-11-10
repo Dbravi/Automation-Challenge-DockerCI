@@ -23,17 +23,29 @@ jobs:
     - name: Pull Docker image
       run: docker pull dovrak/playwright-1
 
-    # Step 4: Run Playwright tests and generate Allure report in Docker container
-    - name: Run Playwright tests and generate Allure report in Docker container
+    # Step 4: Run Playwright tests in Docker container
+    - name: Run Playwright tests in Docker container
       run: |
         docker run --rm \
           -v $(pwd):/workspace \
-          -v $(pwd)/allure-report:/workspace/allure-report \
           -w /workspace \
           dovrak/playwright-1 \
-          /bin/bash -c "npm ci && npx playwright install --with-deps && npx playwright test && allure generate --single-file ./allure-results --clean --output ./allure-report"
+          /bin/bash -c "npm ci && npx playwright install --with-deps && npx playwright test"
 
-    # Step 5: Upload Allure Report as artifact
+    # Step 5: Install Allure command-line tool
+    - name: Install Allure command-line tool
+      run: |
+        npm install -g allure-commandline --save-dev
+        wget -qO allure.zip https://github.com/allure-framework/allure2/releases/download/2.32.0/allure-2.32.0.zip
+        unzip allure.zip -d /opt/allure
+        sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+        rm allure.zip
+
+    # Step 6: Generate Allure report
+    - name: Generate Allure report
+      run: allure generate --single-file ./allure-results --clean
+
+    # Step 7: Upload Allure Report as artifact
     - name: Upload Allure Report
       uses: actions/upload-artifact@v4
       with:
