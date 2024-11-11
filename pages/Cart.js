@@ -20,7 +20,7 @@ export class CartPage {
     await this.page.getByRole('link', { name: ' My Cart 1 1 items' }).click();
   }
 
-  async verifyProductInCart(productName) {
+  async verifyProductInCart() {
     await expect(this.page.locator('#mini-cart')).toContainText('Olivia 1/4 Zip Light Jacket');
   }
 }

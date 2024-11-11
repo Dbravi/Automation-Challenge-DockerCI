@@ -16,6 +16,7 @@ export class CheckoutPage {
     this.nextButton = page.getByRole('button', { name: 'Next' });
     this.placeOrderButton = page.getByRole('button', { name: 'Place Order' });
     this.orderSuccessMessage = page.getByText('Thank you for your purchase!');
+    this.customerMailError = page.locator('#customer-email-error');
   }
 
   async fillShippingDetails(details) {
@@ -36,7 +37,7 @@ export class CheckoutPage {
   }
 
   async selectPaymentMethod(method) {
-    await this.page.getByLabel(method).check(); // Kept inline since `method` varies based on input
+    await this.page.getByLabel(method).check();
   }
 
   async placeOrder() {
@@ -45,5 +46,8 @@ export class CheckoutPage {
 
   async verifyOrderSuccess() {
     await expect(this.orderSuccessMessage).toBeVisible();
+  }
+  async verifyMandatoryEmail() {
+    await expect(this.customerMailError).toContainText('This is a required field.')
   }
 }
