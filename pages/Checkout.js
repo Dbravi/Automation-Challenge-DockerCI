@@ -3,34 +3,47 @@ import { expect } from '@playwright/test';
 export class CheckoutPage {
   constructor(page) {
     this.page = page;
+    this.emailField = page.getByRole('textbox', { name: 'Email Address*' });
+    this.firstNameField = page.getByLabel('First Name');
+    this.lastNameField = page.getByLabel('Last Name');
+    this.companyField = page.getByLabel('Company');
+    this.addressField = page.getByLabel('Street Address: Line 1');
+    this.countrySelect = page.getByLabel('Country');
+    this.regionSelect = page.locator('select[name="region_id"]');
+    this.cityField = page.getByLabel('City');
+    this.zipCodeField = page.getByLabel('Zip/Postal Code');
+    this.phoneNumberField = page.getByLabel('Phone Number');
+    this.nextButton = page.getByRole('button', { name: 'Next' });
+    this.placeOrderButton = page.getByRole('button', { name: 'Place Order' });
+    this.orderSuccessMessage = page.getByText('Thank you for your purchase!');
   }
 
   async fillShippingDetails(details) {
-    await this.page.getByRole('textbox', { name: 'Email Address*' }).fill(details.email);
-    await this.page.getByLabel('First Name').fill(details.firstName);
-    await this.page.getByLabel('Last Name').fill(details.lastName);
-    await this.page.getByLabel('Company').fill(details.company);
-    await this.page.getByLabel('Street Address: Line 1').fill(details.address);
-    await this.page.getByLabel('Country').selectOption(details.country);
-    await this.page.locator('select[name="region_id"]').selectOption(details.region);
-    await this.page.getByLabel('City').fill(details.city);
-    await this.page.getByLabel('Zip/Postal Code').fill(details.zipCode);
-    await this.page.getByLabel('Phone Number').fill(details.phoneNumber);
+    await this.emailField.fill(details.email);
+    await this.firstNameField.fill(details.firstName);
+    await this.lastNameField.fill(details.lastName);
+    await this.companyField.fill(details.company);
+    await this.addressField.fill(details.address);
+    await this.countrySelect.selectOption(details.country);
+    await this.regionSelect.selectOption(details.region);
+    await this.cityField.fill(details.city);
+    await this.zipCodeField.fill(details.zipCode);
+    await this.phoneNumberField.fill(details.phoneNumber);
   }
 
   async proceedToNext() {
-    await this.page.getByRole('button', { name: 'Next' }).click();
+    await this.nextButton.click();
   }
 
   async selectPaymentMethod(method) {
-    await this.page.getByLabel(method).check();
+    await this.page.getByLabel(method).check(); // Kept inline since `method` varies based on input
   }
 
   async placeOrder() {
-    await this.page.getByRole('button', { name: 'Place Order' }).click();
+    await this.placeOrderButton.click();
   }
 
   async verifyOrderSuccess() {
-    await expect(this.page.getByText('Thank you for your purchase!')).toBeVisible();
+    await expect(this.orderSuccessMessage).toBeVisible();
   }
 }

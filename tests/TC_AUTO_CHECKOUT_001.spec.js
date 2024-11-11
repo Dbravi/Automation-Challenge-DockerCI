@@ -15,7 +15,7 @@ test('End to end flow: add a product to cart, checkout using Check/ Money as pay
     await homePage.selectProduct('Breathe-Easy Tank');
     await productPage.selectSize('XS');
     await productPage.selectColor('Purple');
-    await productPage.addToCart();
+    await productPage.addToCartCO();
   });
 
   await test.step('Proceed to cart and checkout', async () => {
