@@ -1,22 +1,25 @@
 export class HomePage {
   constructor(page) {
     this.page = page;
-    this.womenMenuItem = page.getByRole('menuitem', { name: ' Women' });
-    this.topsMenuItem = page.getByRole('menuitem', { name: ' Tops' });
-    this.jacketsMenuItem = page.getByRole('menuitem', { name: 'Jackets' });
-    this.whatsNewMenuItem = page.getByRole('menuitem', { name: "What's New" });
-    this.menMenuItem = page.getByRole('menuitem', { name: ' Men' });
-    this.gearMenuItem = page.getByRole('menuitem', { name: ' Gear' });
-    this.trainingMenuItem = page.getByRole('menuitem', { name: ' Training' });
-    this.saleMenuItem = page.getByRole('menuitem', { name: 'Sale' });
+    this.womenMenuItem = page.getByRole("menuitem", { name: " Women" });
+    this.topsMenuItem = page.getByRole("menuitem", { name: " Tops" });
+    this.jacketsMenuItem = page.getByRole("menuitem", { name: "Jackets" });
+    this.whatsNewMenuItem = page.getByRole("menuitem", { name: "What's New" });
+    this.menMenuItem = page.getByRole("menuitem", { name: " Men" });
+    this.gearMenuItem = page.getByRole("menuitem", { name: " Gear" });
+    this.trainingMenuItem = page.getByRole("menuitem", { name: " Training" });
+    this.saleMenuItem = page.getByRole("menuitem", { name: "Sale" });
+    this.createAccountLink = page.locator(
+      'role=link[name="Create an Account"]'
+    );
   }
 
   async goto() {
-    await this.page.goto('https://magento-2.showcase-wallee.com/');
+    await this.page.goto("https://magento-2.showcase-wallee.com/");
   }
 
   async selectProduct(productName) {
-    await this.page.locator('strong').filter({ hasText: productName }).click();
+    await this.page.locator("strong").filter({ hasText: productName }).click();
   }
 
   async navigateToWhatsNew() {
@@ -53,5 +56,8 @@ export class HomePage {
 
   async clickJacketsMenu() {
     await this.jacketsMenuItem.click();
+  }
+  async navigateToCreateAccountPage() {
+    await this.createAccountLink.click();
   }
 }
