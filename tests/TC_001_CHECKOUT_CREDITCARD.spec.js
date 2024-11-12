@@ -4,7 +4,7 @@ import { ProductPage } from "../pages/Product.js";
 import { CartPage } from "../pages/Cart.js";
 import { CheckoutPage } from "../pages/Checkout.js";
 
-test("test", async ({ page }) => {
+test("Validate Succesfull payment with Credit Card", async ({ page }) => {
   const homePage = new HomePage(page);
   const productPage = new ProductPage(page);
   const cartPage = new CartPage(page);
