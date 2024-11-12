@@ -1,6 +1,10 @@
 # Ignore node_modules (they'll be installed inside the container)
 node_modules/
 
+# Ignore logs and debug files
+npm-debug.log
+yarn-error.log
+
 # Ignore test result directories
 /test-results/
 /playwright-report/
@@ -13,11 +17,7 @@ node_modules/
 /allure-report/
 /allure-results/
 
-# Ignore logs and debug files
-npm-debug.log
-yarn-error.log
-
-# Ignore coverage files
+# Ignore coverage files (if any)
 coverage/
 
 # Ignore local configuration files (if applicable)
@@ -25,5 +25,3 @@ coverage/
 
 # Ignore any other unnecessary files or directories
 .DS_Store
-.idea/
-.vscode/
