@@ -1,14 +1,16 @@
-import { test } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 import { HomePage } from "../pages/Home.js";
 import { ProductPage } from "../pages/Product.js";
 import { CartPage } from "../pages/Cart.js";
 import { CheckoutPage } from "../pages/Checkout.js";
 
-test("Validate mandatory mail validation", async ({ page }, testInfo) => {
+test("test", async ({ page }) => {
   const homePage = new HomePage(page);
   const productPage = new ProductPage(page);
   const cartPage = new CartPage(page);
   const checkoutPage = new CheckoutPage(page);
+  const firstName = "Test Name";
+  const lastName = "Test Last Name";
 
   await test.step("Navigate to homepage and select product", async () => {
     await homePage.goto();
@@ -25,9 +27,9 @@ test("Validate mandatory mail validation", async ({ page }, testInfo) => {
 
   await test.step("Fill in shipping details", async () => {
     await checkoutPage.fillShippingDetails({
-      email: "",
-      firstName: "Test Name",
-      lastName: "Test Last Name",
+      email: "chewable_quantum659@simplelogin.com",
+      firstName: firstName,
+      lastName: lastName,
       company: "Test Company",
       address: "Test street 28 7",
       country: "LT",
@@ -39,12 +41,16 @@ test("Validate mandatory mail validation", async ({ page }, testInfo) => {
     await checkoutPage.proceedToNext();
   });
 
-  await test.step("Validate mandatory field pop up validation", async () => {
-    await checkoutPage.verifyMandatoryEmail();
-    const screenshot = await page.screenshot();
-    await testInfo.attach("Mandatory mail validation", {
-      body: screenshot,
-      contentType: "image/png",
-    });
+  await test.step("Select Check / Money order as payment method and place the order", async () => {
+    await checkoutPage.selectPaymentMethod("Credit / Debit Card");
+    await checkoutPage.placeOrder();
+    await checkoutPage.clickPaymentButton();
+    await checkoutPage.clickUseButton();
+    await checkoutPage.clickSelectFormButton();
+    await checkoutPage.clickSelectFormGender();
+    await checkoutPage.clickPlaceFormOrder();
+  });
+  await test.step("Validate success message", async () => {
+    await checkoutPage.validateSuccessFormMSG();
   });
 });
