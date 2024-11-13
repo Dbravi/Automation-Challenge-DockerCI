@@ -4,7 +4,7 @@ import { faker } from "@faker-js/faker";
 import { HomePage } from "../pages/Home";
 import { AccountPage } from "../pages/Account";
 
-test("Account creation with randomized data", async ({ page }) => {
+test("Validate Account creation using randomized data", async ({ page }) => {
   const homePage = new HomePage(page);
   const accountPage = new AccountPage(page);
   const firstName = faker.person.firstName();

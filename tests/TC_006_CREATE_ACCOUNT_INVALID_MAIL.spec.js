@@ -4,7 +4,7 @@ import { faker } from "@faker-js/faker";
 import { HomePage } from "../pages/Home";
 import { AccountPage } from "../pages/Account";
 
-test("Check domain validation is correct - email (missing @)", async ({
+test("Validate domain check is correct - email (missing @)", async ({
   page,
 }) => {
   const homePage = new HomePage(page);

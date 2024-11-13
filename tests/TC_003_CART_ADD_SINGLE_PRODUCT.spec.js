@@ -4,7 +4,7 @@ import { HomePage } from "../pages/Home";
 import { ProductPage } from "../pages/Product";
 import { CartPage } from "../pages/Cart";
 
-test("Add a single product to cart", async ({ page }) => {
+test("Validate Add a single product to cart", async ({ page }) => {
   const homePage = new HomePage(page);
   const product = new ProductPage(page);
   const cartPage = new CartPage(page);

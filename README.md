@@ -1,16 +1,15 @@
 Overview
 This project includes automated tests designed to validate the functionality of an e-commerce website built using Playwright. The tests cover various user flows such as browsing products, adding them to the cart, and completing the checkout process.
 
-Tests
 The tests are designed to ensure the following:
 
-Navigating through product pages.
-Selecting product options (size, color).
-Adding products to the shopping cart.
-Verifying the cart’s contents.
-Proceeding through the checkout process, including filling out shipping and payment information.
-Completing an order and verifying the "Thank You" page.
-Each test case simulates a user journey on the website, ensuring key functionalities work as expected.
+Validate payment with Credit Card
+Validate payment with Check/Money
+Validate Add a single product to cart
+Validate that mail is a mandatory field for the registry at checkout
+Validate account creation using randomized data"
+Validate domain check is correct - (email missing @)
+Validate navigation to all main pages on the website
 
 Installation
 Prerequisites
@@ -41,10 +40,11 @@ To run specific tests or groups of tests, use the following syntax:
 npx playwright test <test-file-name>
 For example, to run the test for the checkout process, you might run:
 
-npx playwright test checkoutTest.js
+This repository is using allure for the testing report, on Github Actions pipeline the report is attached, but to generate them locally use
 
-After running the tests, a report will be generated showing which tests passed or failed and screenshot evidence for the validation step. Review the output to ensure that all tests have passed and the application works as expected.
+allure generate ./allure-results -o ./allure-report
+allure open ./allure-report
 
+To pull this project docker Image use
 
-
-
+docker pull dovrak/playwright-1

@@ -4,7 +4,7 @@ import { ProductPage } from "../pages/Product.js";
 import { CartPage } from "../pages/Cart.js";
 import { CheckoutPage } from "../pages/Checkout.js";
 
-test("Add a product to cart, checkout using Check/ Money as payment method", async ({
+test("Validate Succesfull payment with Check/Money", async ({
   page,
 }) => {
   const homePage = new HomePage(page);
