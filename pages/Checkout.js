@@ -17,25 +17,13 @@ export class CheckoutPage {
     this.placeOrderButton = page.getByRole("button", { name: "Place Order" });
     this.orderSuccessMessage = page.getByText("Thank you for your purchase!");
     this.customerMailError = page.locator("#customer-email-error");
-    this.paymentButton = page
-      .locator("#paymentForm_187054")
-      .contentFrame()
-      .getByRole("button", {
-        name: "You can use the test information to simulate payments.",
-      });
-    this.useButton = page
-      .locator("#paymentForm_187054")
-      .contentFrame()
-      .locator(".btn-use")
-      .first();
-    this.selectFormButton = page
-      .locator("#paymentForm_187054")
-      .contentFrame()
-      .locator(".selectize-input");
-    this.selectFormGender = page
-      .locator("#paymentForm_187054")
-      .contentFrame()
-      .getByText("Female");
+    const iframe = page.locator("#paymentForm_187054").contentFrame();
+    this.paymentButton = iframe.getByRole("button", {
+      name: "You can use the test information to simulate payments.",
+    });
+    this.useButton = iframe.locator(".btn-use").first();
+    this.selectFormButton = iframe.locator(".selectize-input");
+    this.selectFormGender = iframe.getByText("Female");
     this.placeFormOrder = page.getByRole("button", { name: "Place Order" });
     this.successFormMSG = page.getByText("Thank you for your purchase!");
   }
